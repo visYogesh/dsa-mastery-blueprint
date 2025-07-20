@@ -1,16 +1,22 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Code, Menu, X, BookOpen, Trophy, Users } from "lucide-react";
+import { Code, Menu, X, BookOpen, Trophy, Users, LogIn } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   const navItems = [
-    { name: "Problems", href: "#problems", icon: Code },
-    { name: "Learn", href: "#learn", icon: BookOpen },
-    { name: "Compete", href: "#compete", icon: Trophy },
-    { name: "Community", href: "#community", icon: Users },
+    { name: "Home", href: "/home", icon: BookOpen },
+    { name: "Problems", href: "/problems", icon: Code },
+    { name: "Compete", href: "/compete", icon: Trophy },
+    { name: "Community", href: "/community", icon: Users },
   ];
+
+  const isActive = (path: string) => {
+    return location.pathname.startsWith(path);
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
@@ -18,35 +24,42 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <div className="flex items-center space-x-2">
+            <Link to="/" className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-hero rounded-lg flex items-center justify-center">
                 <Code className="w-5 h-5 text-primary-foreground" />
               </div>
               <span className="text-xl font-bold text-foreground">DSAlgo</span>
-            </div>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="flex items-center space-x-8">
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.name}
-                  href={item.href}
-                  className="flex items-center space-x-1 text-muted-foreground hover:text-foreground transition-colors duration-200"
+                  to={item.href}
+                  className={`flex items-center space-x-1 transition-colors duration-200 ${
+                    isActive(item.href)
+                      ? "text-purple-400 font-semibold border-b-2 border-purple-400 pb-1"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
                 >
                   <item.icon className="w-4 h-4" />
                   <span>{item.name}</span>
-                </a>
+                </Link>
               ))}
             </div>
           </div>
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost">Sign In</Button>
-            <Button className="bg-gradient-hero hover:opacity-90 transition-opacity">
-              Get Started
+            <Button
+              variant="ghost"
+              className="border border-white flex items-center space-x-2"
+            >
+              <LogIn className="h-4 w-4" />
+              <span>Sign In</span>
             </Button>
           </div>
 
@@ -57,7 +70,11 @@ const Navbar = () => {
               size="sm"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {isMenuOpen ? (
+                <X className="w-5 h-5" />
+              ) : (
+                <Menu className="w-5 h-5" />
+              )}
             </Button>
           </div>
         </div>
@@ -67,20 +84,26 @@ const Navbar = () => {
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 bg-background border-t border-border">
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.name}
-                  href={item.href}
-                  className="flex items-center space-x-2 px-3 py-2 text-muted-foreground hover:text-foreground transition-colors duration-200"
+                  to={item.href}
+                  className={`flex items-center space-x-2 px-3 py-2 transition-colors duration-200 ${
+                    isActive(item.href)
+                      ? "text-purple-400 font-semibold border-l-4 border-purple-400 pl-2"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   <item.icon className="w-4 h-4" />
                   <span>{item.name}</span>
-                </a>
+                </Link>
               ))}
               <div className="flex flex-col space-y-2 pt-4">
-                <Button variant="ghost" className="justify-start">Sign In</Button>
-                <Button className="bg-gradient-hero hover:opacity-90 transition-opacity justify-start">
-                  Get Started
+                <Button
+                  variant="ghost"
+                  className="justify-start border-2 border-white"
+                >
+                  Sign In
                 </Button>
               </div>
             </div>

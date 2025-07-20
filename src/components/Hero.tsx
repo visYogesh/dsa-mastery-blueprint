@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, Play, Code2, Brain, Target } from "lucide-react";
-
+import { useNavigate } from "react-router-dom";
 const Hero = () => {
+  const navigate = useNavigate();
   return (
-    <section className="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+    <section className="pt-4 pb-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           {/* Main Hero Content */}
@@ -20,17 +21,17 @@ const Hero = () => {
                 Algorithms
               </span>
             </h1>
-            <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-              Interactive coding platform with visual learning, real-time practice, and AI-powered feedback. 
-              From beginner basics to advanced interview preparation.
+            <p className="text-lg text-muted-foreground mb-8 max-w-3xl mx-auto">
+              Sharpen your DSA skills with interactive problems, progress tracking, and more.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <Button 
+              onClick={() => navigate("/problems")}
                 size="lg" 
                 className="bg-gradient-hero hover:opacity-90 transition-opacity shadow-glow text-lg px-8 py-6"
               >
-                Start Learning Free
+                Start Solving
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               <Button 
