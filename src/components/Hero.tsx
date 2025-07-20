@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, Play, Code2, Brain, Target } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Features from "./Features";
 const Hero = () => {
   const navigate = useNavigate();
   return (
@@ -101,6 +102,8 @@ const Hero = () => {
           </div>
         </div>
       </div>
+
+      
     </section>
   );
 };
