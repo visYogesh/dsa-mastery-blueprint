@@ -16,6 +16,7 @@ import SignInPopup from "@/auth/SignInPopup";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] = useState(false);
   const [user, setUser] = useState<{
     name: string;
     phone: string;
@@ -23,7 +24,6 @@ const Navbar = () => {
   } | null>(null);
   const location = useLocation();
 
-  // Load user from localStorage on mount
   useEffect(() => {
     const storedUser = localStorage.getItem("dsalgoUser");
     if (storedUser) setUser(JSON.parse(storedUser));
@@ -32,6 +32,7 @@ const Navbar = () => {
   const handleSignOut = () => {
     localStorage.removeItem("dsalgoUser");
     setUser(null);
+    setIsLogoutConfirmOpen(false);
   };
 
   const isActive = (path: string) => location.pathname.startsWith(path);
@@ -83,7 +84,7 @@ const Navbar = () => {
                   className="w-8 h-8 rounded-full border border-gray-400"
                 />
                 <Button
-                  onClick={handleSignOut}
+                  onClick={() => setIsLogoutConfirmOpen(true)}
                   className="bg-transparent hover:bg-transparent text-red-400 hover:text-red-600 p-2 rounded-full shadow-none"
                 >
                   <LogOut className="h-5 w-5" />
@@ -108,11 +109,7 @@ const Navbar = () => {
               size="sm"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              {isMenuOpen ? (
-                <X className="w-5 h-5" />
-              ) : (
-                <Menu className="w-5 h-5" />
-              )}
+              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </Button>
           </div>
         </div>
@@ -150,9 +147,9 @@ const Navbar = () => {
                       alt="Profile"
                       className="w-8 h-8 rounded-full border border-gray-400"
                     />
-                      Logout
+                    Logout
                     <Button
-                      onClick={handleSignOut}
+                      onClick={() => setIsLogoutConfirmOpen(true)}
                       className="bg-transparent hover:bg-transparent text-red-400 hover:text-red-600 p-2 rounded-full shadow-none"
                     >
                       <LogOut className="h-5 w-5" />
@@ -185,6 +182,32 @@ const Navbar = () => {
             setIsPopupOpen(false);
           }}
         />
+      )}
+
+      {/* Logout Confirmation Dialog */}
+      {isLogoutConfirmOpen && (
+        <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+          <div className="bg-background p-6 rounded-lg shadow-lg max-w-sm w-full">
+            <h3 className="text-lg font-semibold mb-4">Confirm Logout</h3>
+            <p className="text-sm text-muted-foreground mb-4">
+              Are you sure you want to sign out?
+            </p>
+            <div className="flex justify-end space-x-3">
+              <Button
+                variant="ghost"
+                onClick={() => setIsLogoutConfirmOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleSignOut}
+                className="bg-red-500 hover:bg-red-600 text-white"
+              >
+                Logout
+              </Button>
+            </div>
+          </div>
+        </div>
       )}
     </nav>
   );

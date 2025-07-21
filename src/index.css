@@ -125,3 +125,16 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+@keyframes fade-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-slide-down {
+  animation: fade-slide-down 0.2s ease-out forwards;
+}
