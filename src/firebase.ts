@@ -17,8 +17,7 @@ export const auth = getAuth(app);
 // Google Provider
 export const googleProvider = new GoogleAuthProvider();
 
-// GitHub Provider
+// GitHub Provider - Fixed configuration
 export const githubProvider = new GithubAuthProvider();
-githubProvider.addScope("read:user");
 githubProvider.addScope("user:email");
-
+githubProvider.addScope("read:user");
