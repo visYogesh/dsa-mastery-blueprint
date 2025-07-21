@@ -76,16 +76,15 @@ const Navbar = () => {
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
             {user ? (
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-1">
                 <img
                   src={user.photo}
                   alt="Profile"
                   className="w-8 h-8 rounded-full border border-gray-400"
                 />
                 <Button
-                  variant="ghost"
                   onClick={handleSignOut}
-                  className="text-red-400 hover:text-red-600"
+                  className="bg-transparent hover:bg-transparent text-red-400 hover:text-red-600 p-2 rounded-full shadow-none"
                 >
                   <LogOut className="h-5 w-5" />
                 </Button>
@@ -145,16 +144,22 @@ const Navbar = () => {
 
               <div className="flex flex-col space-y-2 pt-4">
                 {user ? (
-                  <Button
-                    variant="ghost"
-                    onClick={handleSignOut}
-                    className="justify-start text-red-400 hover:text-red-600"
-                  >
-                    <LogOut className="h-5 w-5" />
-                  </Button>
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={user.photo}
+                      alt="Profile"
+                      className="w-8 h-8 rounded-full border border-gray-400"
+                    />
+                      Logout
+                    <Button
+                      onClick={handleSignOut}
+                      className="bg-transparent hover:bg-transparent text-red-400 hover:text-red-600 p-2 rounded-full shadow-none"
+                    >
+                      <LogOut className="h-5 w-5" />
+                    </Button>
+                  </div>
                 ) : (
                   <Button
-                    variant="ghost"
                     onClick={() => {
                       setIsPopupOpen(true);
                       setIsMenuOpen(false);

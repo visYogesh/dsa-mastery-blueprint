@@ -10,7 +10,15 @@ const firebaseConfig = {
   appId: "1:343528141114:web:d42c56b3778be952692003",
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+
+// Google Provider
 export const googleProvider = new GoogleAuthProvider();
+
+// GitHub Provider
 export const githubProvider = new GithubAuthProvider();
+githubProvider.addScope("read:user");
+githubProvider.addScope("user:email");
+
