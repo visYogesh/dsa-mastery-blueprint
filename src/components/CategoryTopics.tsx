@@ -12,7 +12,6 @@ import {
   Filter,
   Hash,
   BarChart,
-  List,
   RefreshCw,
 } from "lucide-react";
 
