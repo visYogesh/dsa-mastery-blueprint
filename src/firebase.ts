@@ -1,17 +1,5 @@
 import { initializeApp } from "firebase/app";
-import {
-  getAuth,
-  GoogleAuthProvider,
-  GithubAuthProvider,
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-} from "firebase/auth";
-
-declare global {
-  interface Window {
-    recaptchaVerifier?: RecaptchaVerifier;
-  }
-}
+import { getAuth, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDbTYCK_jzvDCWozr5QbiIMqdqbjZdI2Jc",
@@ -29,19 +17,7 @@ export const auth = getAuth(app);
 // Google Provider
 export const googleProvider = new GoogleAuthProvider();
 
-// GitHub Provider
+// GitHub Provider - Fixed configuration
 export const githubProvider = new GithubAuthProvider();
 githubProvider.addScope("user:email");
 githubProvider.addScope("read:user");
-
-// Phone Authentication Helpers
-export const setupRecaptcha = () => {
-  window.recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
-    size: "invisible",
-  });
-};
-
-export const sendOTP = async (phoneNumber) => {
-  if (!window.recaptchaVerifier) setupRecaptcha();
-  return signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier);
-};
